@@ -17,6 +17,21 @@ var ENV = process.env.npm_lifecycle_event;
 var isTest = ENV === 'test' || ENV === 'test-watch';
 var isProd = ENV === 'build';
 
+var defaultOptions = {
+  default: {
+    serverUrl: 'http://127.0.0.1:8081',
+    port: 8000,
+    livereloadPort: 35729,
+    app: 'app/',
+    output: 'app/',
+  }
+};
+
+var minimist = require('minimist');
+var options = minimist(process.argv.slice(2), defaultOptions);
+
+
+
 module.exports = function makeWebpackConfig() {
   /**
    * Config
@@ -55,7 +70,7 @@ module.exports = function makeWebpackConfig() {
    */
   config.output = isTest ? {} : {
     path: root('dist'),
-    publicPath: isProd ? '/' : 'http://localhost:8080/',
+    publicPath: isProd ? '/' : 'http://localhost:' + options.port + '/',
     filename: isProd ? 'js/[name].[hash].js' : 'js/[name].js',
     chunkFilename: isProd ? '[id].[hash].chunk.js' : '[id].chunk.js'
   };
@@ -246,6 +261,17 @@ module.exports = function makeWebpackConfig() {
     contentBase: './src/public',
     historyApiFallback: true,
     stats: 'minimal' // none (or false), errors-only, minimal, normal (or true) and verbose
+  };
+
+  /**
+  * proxy /rest request
+  */
+  config.devServer.proxy = {
+    '/rest/*': {
+      target: options.serverUrl,
+      secure: false,
+      ws: true
+    }
   };
 
   return config;
