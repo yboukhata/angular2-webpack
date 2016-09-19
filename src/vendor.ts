@@ -6,8 +6,8 @@ import '@angular/common';
 import '@angular/http';
 import '@angular/router';
 
-// RxJS
 import 'rxjs';
+import '@angularclass/hmr';
 
 // import wakanda client
 import 'wakanda-client';
