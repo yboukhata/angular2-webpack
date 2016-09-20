@@ -10,7 +10,7 @@ import 'rxjs';
 import '@angularclass/hmr';
 
 // import wakanda client
-import 'wakanda-client';
+import 'wakanda-client/browser/no-promise';
 
 // Other vendors for example jQuery, Lodash or Bootstrap
 // You can import js, ts, css, sass, ...

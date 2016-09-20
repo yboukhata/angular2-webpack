@@ -14,6 +14,7 @@ import '../style/app.scss';
 })
 export class AppComponent {
   url = 'https://github.com/preboot/angular2-webpack';
+  public wakandaClientVersion: string;
 
   constructor(private api: ApiService, public wakanda: Wakanda) {
     this.wakandaClientVersion = this.wakanda.wakandaClientVersion;
